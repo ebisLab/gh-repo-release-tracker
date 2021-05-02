@@ -8,6 +8,7 @@ import WatchList from "./pages/WatchList";
 
 function App() {
   const [data, setData]=useState([])
+  const [fullList, setFullList]=useState([])
 
   const octokit = new Octokit();
 
@@ -29,10 +30,12 @@ function App() {
   }, [])
 
 
+
+
   return (
     <div style={{display: 'flex'}}>
-      <Home data={data} style={{width:"50%"}}/>
-      <WatchList data={data} style={{width:"50%"}}/>
+      <Home data={data} fullList={fullList} setFullList={setFullList} style={{width:"50%"}}/>
+      <WatchList data={data} fullList={fullList} style={{width:"50%"}}/>
     </div>
     // <div className="App">
     //   <div className="app-position">

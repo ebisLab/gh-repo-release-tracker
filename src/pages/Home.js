@@ -2,22 +2,13 @@
 import React,{useEffect,useState} from 'react';
 
 
-function Home({data}) {
+function Home({data, fullList, setFullList}) {
   const [add, setAdd]=useState(false)
   const [addIntoList, setAddIntoList]=useState({
       id:'',
       added:false
   })
-  const [fullList, setFullList]=useState([])
   const [storedIds, setStoredIds]=useState([])
-
-
-
-  // useEffect(() =>{
-  //   // setFullList()
-  //   fullList.map(item=>item.name)
-  //   console.log("full list", fullList)
-  // }, [fullList])
   
   console.log("smoof", data && data.map(item=>item.name))
 
