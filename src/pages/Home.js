@@ -2,41 +2,54 @@
 import React,{useEffect,useState} from 'react';
 
 
-function Home({data, fullList, setFullList}) {
+function Home({data, fullList, setFullList, funadd, funadd2}) {
   const [add, setAdd]=useState(false)
-  const [addIntoList, setAddIntoList]=useState({
-      id:'',
-      added:false
-  })
-  const [storedIds, setStoredIds]=useState([])
-  
-  console.log("smoof", data && data.map(item=>item.name))
+  const [disableMe, setDisableMe]=useState()
 
 
+  const jalla=()=>{
+    console.log("wanted to see")
+    // console.log(fullList.map(item=>item.id===id))
+    // if(fullList.map(item=>item.id===id)){
+
+
+    // }
+  }
   let addToList=(id)=>{
     // console.log("id",id)
 
   }
 
-  const handleChange=(id)=>{
-    //   console.log("check?", e.target)
-      setAdd(!add)
-      setAddIntoList({
-          id:id,
-          added:!add
-      })
+  useEffect((id) => {
+    // if(fullList.map(item=>item.id===id))
+    jalla()
+
+
+  }, [])
+
+  // const handleChange=(id)=>{
+  //   //   console.log("check?", e.target)
+  //     setAdd(!add)
+  //     setAddIntoList({
+  //         id:id,
+  //         added:!add
+  //     })
+  // }
+
+
+  const submity=(e,id)=>{
+    e.preventDefault()
+
+    console.log("id", id)
+    // if(!newinfo)return;
+    funadd2({
+      id:id, added:true
+    })
+    console.log("this got to workd")
+
   }
 
-  const funadd=(id)=>{
-setFullList([...fullList, {id:id, added:true}])
-setStoredIds([...storedIds, id])
 
-}
-
-  console.log("added?", add)
-  console.log("addinto list", addIntoList)
-  console.log("addeding", fullList)
-  console.log("storedids",storedIds)
 
   return (
     <div className="App" style={{width:"50%"}}>
@@ -47,23 +60,19 @@ setStoredIds([...storedIds, id])
     onClick={(e)=>addToList(item.id)}
     key={item.id}>
         <div style={{height:"50%"}}>{item.name}</div>
-        <button onClick={()=>funadd(item.id)}> addeddd </button>
-        <div
+        <button 
+        disabled={fullList.some(stuff=>stuff.id ===item.id)} 
+        onClick={()=>funadd({id:item.id, published_at:item.published_at, added:true})}> addeddd </button>
+ <div
         style={{ position: "relative",
         left: "39px",
         top: "27px"}}>
-            <input onChange={(e)=>handleChange(item.id)} type="checkbox"/></div>
+            </div>
     </div>
     )} 
 
 
    
-      </div>
-
-      <div>
-        <h1>WATCH LIST</h1>
-    {fullList.map(item=>item.id)}
-    <h2>Finished List</h2>
       </div>
     </div>
   );

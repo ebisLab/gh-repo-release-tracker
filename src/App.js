@@ -6,47 +6,64 @@ import Home from "./pages/Home";
 import WatchList from "./pages/WatchList";
 
 
+export const taskItem = [
+  {
+    id: 1528817077286,
+    added: true
+  },
+  {
+    task: 'Bake Cookies',
+    id: 1528817084358,
+    added: true
+  }
+];
+
+let watchlist = localStorage.getItem('watchlist')?JSON.parse(localStorage.getItem('watchlist')):[]
+
+
 function App() {
   const [data, setData]=useState([])
-  const [fullList, setFullList]=useState([])
+  const [fullList, setFullList]=useState(watchlist)
+  const [sampleList, setSampleList]=useState(taskItem)
 
   const octokit = new Octokit();
 
-
   useEffect(() => {
-    // axios.get(`https://api.github.com/repos/ebisLab/md-previewer`)
-    // .then(res=>console.log("log",res))
 
       octokit.request('GET /repos/{owner}/{repo}/releases', {
         owner: 'microsoft',
         repo: 'vscode'
       }).then(
         (res) => {
-          console.log("res-->", res.data);
           setData(res.data)
         }
       );
 
   }, [])
 
+  const funadd=(new_addition)=>{
+
+setFullList([...fullList, new_addition])
+localStorage.setItem("watchlist", JSON.stringify([...fullList, new_addition]))
+}
+
+
+  const funadd2=(new_addition)=>{
+    console.log("yaaay added", new_addition)
+
+setSampleList([...sampleList, new_addition])
+// setStoredIds([...storedIds, id])
+
+}
+
 
 
 
   return (
     <div style={{display: 'flex'}}>
-      <Home data={data} fullList={fullList} setFullList={setFullList} style={{width:"50%"}}/>
+      <Home funadd={funadd} funadd2={funadd2} data={data} fullList={fullList} setFullList={setFullList} style={{width:"50%"}}/>
       <WatchList data={data} fullList={fullList} style={{width:"50%"}}/>
     </div>
-    // <div className="App">
-    //   <div className="app-position">
-    //   {data.map(item=>
-    // <div 
-    // style={{border:"1px solid white", width:"100px", height:"100px", margin:"5px", padding:"10px"}}
-    // onClick={(e)=>addToList(item.id)}
-    // key={item.id}>{item.name}</div>
-    // )} 
-    //   </div>
-    // </div>
   );
 }
 
