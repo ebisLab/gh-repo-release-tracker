@@ -1,40 +1,23 @@
-import { Octokit } from "@octokit/core";
+
 import React,{useEffect,useState} from 'react';
 
 
 function Home({data}) {
-//   const [data, setData]=useState([])
   const [add, setAdd]=useState(false)
   const [addIntoList, setAddIntoList]=useState({
       id:'',
       added:false
   })
   const [fullList, setFullList]=useState([])
+  const [storedIds, setStoredIds]=useState([])
 
-//   const octokit = new Octokit();
 
 
-//   useEffect(() => {
-//     // axios.get(`https://api.github.com/repos/ebisLab/md-previewer`)
-//     // .then(res=>console.log("log",res))
-
-//       octokit.request('GET /repos/{owner}/{repo}/releases', {
-//         owner: 'microsoft',
-//         repo: 'vscode'
-//       }).then(
-//         (res) => {
-//           console.log("res-->", res.data);
-//           setData(res.data)
-//         }
-//       );
-
-//   }, [])
-
-  useEffect(() => {
-      if(addIntoList.added ===true){
-          fullList.push(addIntoList)
-      }
-  }, [])
+  // useEffect(() =>{
+  //   // setFullList()
+  //   fullList.map(item=>item.name)
+  //   console.log("full list", fullList)
+  // }, [fullList])
   
   console.log("smoof", data && data.map(item=>item.name))
 
@@ -53,12 +36,19 @@ function Home({data}) {
       })
   }
 
+  const funadd=(id)=>{
+setFullList([...fullList, {id:id, added:true}])
+setStoredIds([...storedIds, id])
+
+}
+
   console.log("added?", add)
   console.log("addinto list", addIntoList)
   console.log("addeding", fullList)
+  console.log("storedids",storedIds)
 
   return (
-    <div className="App">
+    <div className="App" style={{width:"50%"}}>
       <div className="app-position">
       {data.map(item=>
     <div 
@@ -66,6 +56,7 @@ function Home({data}) {
     onClick={(e)=>addToList(item.id)}
     key={item.id}>
         <div style={{height:"50%"}}>{item.name}</div>
+        <button onClick={()=>funadd(item.id)}> addeddd </button>
         <div
         style={{ position: "relative",
         left: "39px",
@@ -73,7 +64,15 @@ function Home({data}) {
             <input onChange={(e)=>handleChange(item.id)} type="checkbox"/></div>
     </div>
     )} 
+
+
    
+      </div>
+
+      <div>
+        <h1>WATCH LIST</h1>
+    {fullList.map(item=>item.id)}
+    <h2>Finished List</h2>
       </div>
     </div>
   );

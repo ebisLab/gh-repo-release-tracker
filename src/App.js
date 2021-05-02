@@ -3,6 +3,7 @@ import React,{useEffect,useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Home from "./pages/Home";
+import WatchList from "./pages/WatchList";
 
 
 function App() {
@@ -26,17 +27,12 @@ function App() {
       );
 
   }, [])
-  
-  console.log("smoof", data && data.map(item=>item.name))
 
-  let addToList=(id)=>{
-    console.log("id",id)
-
-  }
 
   return (
-    <div>
-      <Home data={data}/>
+    <div style={{display: 'flex'}}>
+      <Home data={data} style={{width:"50%"}}/>
+      <WatchList data={data} style={{width:"50%"}}/>
     </div>
     // <div className="App">
     //   <div className="app-position">
