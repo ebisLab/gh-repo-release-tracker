@@ -26,7 +26,7 @@ function App() {
   const [fullList, setFullList]=useState(watchlist)
   const [sampleList, setSampleList]=useState(taskItem)
 
-  const octokit = new Octokit();
+  const octokit = new Octokit({auth:`${process.env.REACT_APP_OKTO_KEY}`});
 
   useEffect(() => {
 
@@ -41,28 +41,25 @@ function App() {
 
   }, [])
 
-  const funadd=(new_addition)=>{
+  const addNewRepo=(new_addition)=>{
 
 setFullList([...fullList, new_addition])
 localStorage.setItem("watchlist", JSON.stringify([...fullList, new_addition]))
 }
 
+const clearRepo=(remove_item)=>{
+  setFullList(fullList.filter(item=>item.id !== remove_item))
+  localStorage.setItem("watchlist", JSON.stringify(fullList.filter(item=>item.id !== remove_item)))
+  }
 
-  const funadd2=(new_addition)=>{
-    console.log("yaaay added", new_addition)
-
-setSampleList([...sampleList, new_addition])
-// setStoredIds([...storedIds, id])
-
-}
 
 
 
 
   return (
     <div style={{display: 'flex'}}>
-      <Home funadd={funadd} funadd2={funadd2} data={data} fullList={fullList} setFullList={setFullList} style={{width:"50%"}}/>
-      <WatchList data={data} fullList={fullList} style={{width:"50%"}}/>
+      <Home addNewRepo={addNewRepo} data={data} fullList={fullList} setFullList={setFullList} style={{width:"50%"}}/>
+      <WatchList clearRepo={clearRepo} data={data} fullList={fullList} style={{width:"50%"}}/>
     </div>
   );
 }
