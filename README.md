@@ -25,7 +25,11 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 All of the below dependencies can be installed using: yarn install or npm install
 
+Create a .env file and add your [personal token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) in the `REACT_APP_OKTO_KEY=` variable
+
 Start development by creating a react app using: `yarn start or npm start`
+
+
 
 # MVP
 * user is able to search through for github organizations' repositories
