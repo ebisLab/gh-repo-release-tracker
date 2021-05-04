@@ -25,7 +25,9 @@ export default function Repo({item,fullList,addNewRepo,releaseNewInfo}) {
             <div style={{height:"50%"}}>{item.name}</div>
             <button 
             disabled={fullList.some(stuff=>stuff.id ===item.id)} 
-            onClick={()=>addNewRepo({id:item.id, name:item.name, owner:item.owner.login, updated_at:item.updated_at, published_at:item.published_at, added:true})}> addeddd </button>
+            onClick={()=>addNewRepo({id:item.id, name:item.name, 
+            // owner:item.owner.login, 
+            updated_at:item.updated_at, published_at:item.published_at, added:true})}> addeddd </button>
      <div
             style={{ position: "relative",
             left: "39px",

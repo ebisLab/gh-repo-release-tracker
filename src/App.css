@@ -39,6 +39,17 @@
   align-content: flex-end;
 }
 
+
+
+.card{
+  border: 2px solid green;
+}
+
+.new_update{
+  border:3px solid lawngreen;
+  background-color: antiquewhite;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
