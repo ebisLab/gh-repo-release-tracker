@@ -3,11 +3,11 @@ import { Octokit } from "@octokit/core";
 
 export default function WatchList({data, fullList, addNewRepo, setCheckRenders, setFullList, seen,setSeen}) {
     const octokit = new Octokit({auth:`${process.env.REACT_APP_OKTO_KEY}`});
-    const [val, setVal]=useState()
-    const [repoData, setRepoData]=useState()
-    // const [seen, setSeen]=useState(false)
+    const [, setVal]=useState()
 
 
+    //request to each repo clicked's latest release, 
+    //saving the release id in local storage to compare to pinned updated_at key
     const compareData=()=>{
       fullList.map(item=>(
             octokit.request('GET /repos/{owner}/{repo}/releases/latest', {
@@ -15,19 +15,20 @@ export default function WatchList({data, fullList, addNewRepo, setCheckRenders, 
                 repo: item.name
               }).then(
                 (res) => {
-                  setRepoData({name:item.name, updated_at_id:res.data.id})
                   localStorage.setItem(item.name, JSON.stringify({updated_at_id:res.data.id}))
                 }
               ).catch(err=>console.log(err))
+              //need proper way to handle error
         ))
     }
 
 
     useEffect(() => {
         compareData()
-    }, [addNewRepo,seen])
+    }, [addNewRepo])
 
-
+//checking to see if pinned release id matches with local endpoint stored release id in localhost
+//when card is clicked, it will update the latest id with the pinned release id
 const updateNewId=(update_data,e)=>{
 
     let existing = localStorage.getItem(`${update_data.name}`)
@@ -43,7 +44,7 @@ const updateNewId=(update_data,e)=>{
         }
 
     
-
+//deleting card locally and localstorage
     const clearRepo=(remove_item,e)=>{
         e.preventDefault()
         e.stopPropagation()
@@ -54,6 +55,7 @@ const updateNewId=(update_data,e)=>{
         localStorage.removeItem(remove_item.name)
         }
 
+        //checks to see if pinned release matches with local storage
     const isIDMatching=(info)=>{
         let existing = localStorage.getItem(`${info.name}`)
         existing = existing ? JSON.parse(existing):{}
@@ -67,7 +69,7 @@ const updateNewId=(update_data,e)=>{
 
     return (
         <div >
-            <div style={{position: 'fixed', position: "fixed",
+    <div style={{position: 'fixed',
     top: 0,
     bottom: 0,
     overflowY: "scroll",
@@ -82,7 +84,10 @@ const updateNewId=(update_data,e)=>{
             onClick={(e)=>updateNewId(item,e)}
             key={item.id}>
                 <div>{item.name}</div>
+                <div style={{}}> current update ID: {item.updated_at_id||"No new releases"}</div>
+                {/* {item.} */}
                 <button onClick={(e)=>clearRepo(item,e)}>Clear</button>
+                
 
              </div>
             

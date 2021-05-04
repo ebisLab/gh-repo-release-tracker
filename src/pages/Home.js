@@ -1,20 +1,25 @@
 
-import React,{useEffect,useState} from 'react';
-import Repo from '../components/Repo';
+import React from 'react';
 
-
-function Home({data, fullList, setFullList, addNewRepo}) {
-  const [add, setAdd]=useState(false)
-  const [disableMe, setDisableMe]=useState()
-
-
-
+function Home({data, fullList, addNewRepo, submitHandler, orgName, changeHandler}) {
 
 
   return (
     <div className="App" style={{width:"50%"}}>
+      <div style={{height:"150px"}}>
+      <form onSubmit={submitHandler}>
+        <input
+        placeholder="Search User..."
+        type="text"
+        value={orgName}
+        onChange={changeHandler}
+         />
+         <button
+         className="searchbutton"
+         >Search</button>
+      </form>
+      </div>
       <div className="app-position">
-      {/* {data.map(item=><Repo item={item} fullList={fullList} addNewRepo={addNewRepo} />)}  */}
       {data.map(item=>
     <div 
     style={{border:"1px solid white", width:"100px", height:"100px", margin:"5px", padding:"10px"}}
@@ -25,7 +30,7 @@ function Home({data, fullList, setFullList, addNewRepo}) {
         onClick={()=>addNewRepo({id:item.id, name:item.name, 
           owner:item.owner.login, 
           added:true})}
-        > addeddd </button>
+        > added </button>
  <div
         style={{ position: "relative",
         left: "39px",
