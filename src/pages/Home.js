@@ -1,15 +1,17 @@
 
 import React from 'react';
 
-function Home({data, fullList, addNewRepo, submitHandler, orgName, changeHandler}) {
+function Home({data, fullList, addNewRepo, submitHandler, orgName, changeHandler, orgSetName}) {
+
 
 
   return (
     <div className="App" style={{width:"50%"}}>
+      
       <div style={{height:"150px"}}>
       <form onSubmit={submitHandler}>
         <input
-        placeholder="Search User..."
+        placeholder="Search Organization..."
         type="text"
         value={orgName}
         onChange={changeHandler}
@@ -19,6 +21,11 @@ function Home({data, fullList, addNewRepo, submitHandler, orgName, changeHandler
          >Search</button>
       </form>
       </div>
+
+      <div>
+        {orgSetName && <h1>Searching {orgSetName}'s Organization </h1>}</div>
+
+      
       <div className="app-position">
       {data.map(item=>
     <div 

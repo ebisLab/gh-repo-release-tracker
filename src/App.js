@@ -11,9 +11,11 @@ let watchlist = localStorage.getItem('watchlist')?JSON.parse(localStorage.getIte
 function App() {
   const [data, setData]=useState([])
   const [orgName, setOrgName]=useState('')
+  const [searchName, setSearchName]=useState()
   const [fullList, setFullList]=useState(watchlist)
   const [checkRenders, setCheckRenders]=useState(false)
   const [seen, setSeen]=useState(false)
+  const [orgSetName, setOrgSetName]=useState()
 
 
   const octokit = new Octokit({auth:`${process.env.REACT_APP_OKTO_KEY}`}); 
@@ -44,7 +46,7 @@ const changeHandler=(e)=>{
 
 const submitHandler=(e)=>{
   e.preventDefault()
-  setOrgName('')
+  setOrgSetName(orgName)
   octokit.request('GET /orgs/{owner}/repos', { 
     owner: orgName,
   }).then(
@@ -52,8 +54,8 @@ const submitHandler=(e)=>{
       console.log(res.data)
       setData(res.data)
     }
-  ).catch(err=>console.log(err))
-
+  ).catch(err=>console.log(err));
+  e.target.reset()
 }
 
 
@@ -63,6 +65,7 @@ const submitHandler=(e)=>{
   return (
     <div style={{display: 'flex'}}>
       <Home 
+      orgSetName={orgSetName}
             submitHandler={submitHandler} 
             changeHandler={changeHandler}
       addNewRepo={addNewRepo} 
